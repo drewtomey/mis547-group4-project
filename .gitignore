@@ -1,5 +1,6 @@
-data/
+training/data/
 *.csv
-models/
+training/models/
 __pycache__/
 *.pyc
+.env
