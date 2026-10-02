@@ -89,3 +89,4 @@ def main():
     print("\n--- Timing summary ---")
     print(f"LogReg training time: {logreg_time:.1f}s")
     print(f"XGBoost training time: {xgb_time:.1f}s")
+main()
