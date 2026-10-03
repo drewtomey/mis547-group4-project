@@ -3,3 +3,4 @@ uvicorn
 joblib
 pandas
 xgboost
+psycopg2-binary
