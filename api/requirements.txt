@@ -4,4 +4,3 @@ joblib
 pandas
 xgboost
 psycopg2-binary
-boto3
