@@ -37,7 +37,7 @@ def spaces_client():
 # pulls the raw dataset from Spaces into data/
 def download_data():
     os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
-    spaces_client().download_file(os.environ["DO_SPACES_BUCKET"], "raw-data/creditcard.csv", DATA_PATH)
+    spaces_client().download_file(os.environ["SPACES_BUCKET"], "raw_data/creditcard.csv", DATA_PATH)
     print("Downloaded dataset from Spaces")
 
 # reads the .csv into memory and prints class imbalance
