@@ -15,11 +15,29 @@ from sklearn.metrics import classification_report, average_precision_score
 from imblearn.over_sampling import SMOTE
 from xgboost import XGBClassifier
 import joblib
+import boto3
 
 # sets vars for data, model directory, and seed value used in future steps
 DATA_PATH = "data/creditcard.csv"
 MODEL_DIR = "models"
 RANDOM_STATE = 42
+
+# connects to DigitalOcean Spaces using credentials from environment variables
+def spaces_client():
+    region = os.environ["SPACES_REGION"]
+    return boto3.client(
+        "s3",
+        region_name=region,
+        endpoint_url=f"https://{region}.digitaloceanspaces.com",
+        aws_access_key_id=os.environ["SPACES_KEY"],
+        aws_secret_access_key=os.environ["SPACES_SECRET"],
+    )
+ 
+# pulls the raw dataset from Spaces into data/
+def download_data():
+    os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
+    spaces_client().download_file(os.environ["SPACES_BUCKET"], "creditcard.csv", DATA_PATH)
+    print("Downloaded dataset from Spaces")
 
 # reads the .csv into memory and prints class imbalance
 def load_data(path):
