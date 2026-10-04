@@ -72,6 +72,7 @@ def evaluate(name, model, X_test, y_test):
  
  # runs full pipeline and saves to disk for api
 def main():
+    download_data()
     df = load_data(DATA_PATH)
     X_train, X_test, y_train, y_test = split_data(df)
     X_train_res, y_train_res = resample_training_data(X_train, y_train)
@@ -83,8 +84,16 @@ def main():
     evaluate("XGBoost", xgb, X_test, y_test)
  
     os.makedirs(MODEL_DIR, exist_ok=True)
-    joblib.dump(xgb, os.path.join(MODEL_DIR, "xgb_fraud_v1.joblib"))
-    print(f"\nSaved model artifact to {MODEL_DIR}/xgb_fraud_v1.joblib")
+    model_path = os.path.join(MODEL_DIR, "xgb_fraud_v1.joblib")
+    joblib.dump(xgb, model_path)
+    print(f"\nSaved model artifact to {model_path}")
+ 
+    spaces_client().upload_file(
+        model_path,
+        os.environ["SPACES_BUCKET"],
+        "models/xgb_fraud_v1.joblib",
+    )
+    print("Uploaded model artifact to Team 4 Spaces")
  
     print("\n--- Timing summary ---")
     print(f"LogReg training time: {logreg_time:.1f}s")
