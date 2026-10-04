@@ -1,0 +1,5 @@
+DO_SPACES_REGION="sfo3"
+DO_SPACES_BUCKET="mis547-group4-space"
+DO_SPACES_ACCESS_KEY="access key here"
+DO_SPACES_SECRET_KEY="secret key here"
+SPACES_ENDPOINT= https://sfo3.digitaloceanspaces.com
