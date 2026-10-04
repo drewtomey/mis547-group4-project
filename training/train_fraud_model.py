@@ -24,19 +24,20 @@ RANDOM_STATE = 42
 
 # connects to DigitalOcean Spaces using credentials from environment variables
 def spaces_client():
-    region = os.environ["SPACES_REGION"]
+    region = os.environ.get("DO_SPACES_REGION", "sfo3")
+    endpoint = os.environ.get("SPACES_ENDPOINT", f"https://{region}.digitaloceanspaces.com").strip()
     return boto3.client(
         "s3",
         region_name=region,
-        endpoint_url=f"https://{region}.digitaloceanspaces.com",
-        aws_access_key_id=os.environ["SPACES_KEY"],
-        aws_secret_access_key=os.environ["SPACES_SECRET"],
+        endpoint_url =endpoint,
+        aws_access_key_id=os.environ["DO_SPACES_ACCESS_KEY"],
+        aws_secret_access_key=os.environ["DO_SPACES_SECRET_KEY"],
     )
  
 # pulls the raw dataset from Spaces into data/
 def download_data():
     os.makedirs(os.path.dirname(DATA_PATH), exist_ok=True)
-    spaces_client().download_file(os.environ["SPACES_BUCKET"], "creditcard.csv", DATA_PATH)
+    spaces_client().download_file(os.environ["DO_SPACES_BUCKET"], "raw-data/creditcard.csv", DATA_PATH)
     print("Downloaded dataset from Spaces")
 
 # reads the .csv into memory and prints class imbalance
@@ -108,7 +109,7 @@ def main():
  
     spaces_client().upload_file(
         model_path,
-        os.environ["SPACES_BUCKET"],
+        os.environ["DO_SPACES_BUCKET"],
         "models/xgb_fraud_v1.joblib",
     )
     print("Uploaded model artifact to Team 4 Spaces")
