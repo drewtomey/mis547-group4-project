@@ -1,7 +1,7 @@
 # Team 4 Group Project - Credit Card Fraud Detection
 This repository is for team 4's group project in MIS 547: Fundamentals of Cloud Computing and its Design Strategies. This repo is an end-to-end MLOps pipelne on DigitalOcean (DO). In this project, a fraud detection model is trained on a Droplet, served as a Rest API using App Platform and every prediction is logged in a managged PostgreSQL database.
 
-# dataset
+# Dataset
 This project uses a ULB Credit Card Fraud Detection dataset from Kaggle. It has 284,807 tranactions with 492 of them being fraud.
 URL: https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud
 
